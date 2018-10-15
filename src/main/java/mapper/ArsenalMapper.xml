@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ArsenalMapper">
+	<resultMap type="Arsenal" id="baseResultMap">
+		<id property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+		<result property="weigh" column="weigh" />
+		<result property="unit" column="unit" />
+	</resultMap>
+	
+	<select id="selectAll" parameterType="Arsenal" resultMap="baseResultMap">
+		select id,name,price,weigh,unit from Arsenal
+	</select>
+	
+	<delete id="delById" parameterType="Arsenal" >
+		delete from Arsenal where id=#{id}		
+	</delete>
+
+	<update id="update" parameterType="Arsenal" >
+        update Arsenal
+        <set>
+            <if test="name !=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="price!=null">
+                price=#{price},
+            </if>
+            <if test="weigh!=null and weigh!=''">
+                weigh=#{weigh},
+            </if>
+            <if test="unit !=null and unit!=''">
+                unit=#{unit}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <insert id="insert" parameterType="Arsenal">
+        insert into Arsenal values(#{id},#{name},#{price},#{weigh},#{unit})
+
+    </insert>
+	
+	<select id="selectById" parameterType="Arsenal" resultType="Arsenal">
+		select id,name,price,weigh,unit from Arsenal where id=#{id}
+	</select>
+
+
+</mapper>
